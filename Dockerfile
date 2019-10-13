@@ -5,10 +5,10 @@ ENV PACKER_VERSION="$PACKER_VERSION"
 ENV ANSIBLE_CALLBACK_WHITELIST="profile_tasks"
 
 # Default Packer config values
-ENV AZ_LOCATION="West Europe"
-ENV AZ_VM_SIZE="Standard_F4s_v2"
-ENV AZ_IMAGE_RESOURCE_GROUP="Packer-Images-RG"
-ENV AZ_STORAGE_ACCOUNT_NAME="uipathdevtest"
+ENV AZ_LOCATION="Southeast Asia"
+ENV AZ_VM_SIZE="Standard_D4s_v3"
+ENV AZ_IMAGE_RESOURCE_GROUP="presales-cloud-poc-rg"
+ENV AZ_STORAGE_ACCOUNT_NAME="presalesdemobuild"
 
 # Install Ansible
 WORKDIR /install
@@ -27,7 +27,3 @@ RUN wget https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER
 RUN useradd -ms /bin/bash ansible
 RUN mkdir -p /ansible/scripts /ansible/playbooks
 WORKDIR /ansible
-COPY scripts/ ./scripts/
-COPY win-ansible-image.json .
-
-CMD [ "packer",  "build", "win-ansible-image.json" ]

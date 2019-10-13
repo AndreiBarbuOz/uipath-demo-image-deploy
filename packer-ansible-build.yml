@@ -1,0 +1,23 @@
+parameters:
+  containerRegistry: 'demovmcontainer'
+  azureSubscription: 'PoC'
+  repositoryName: 'build-packer-ansible'
+
+jobs:
+- job:
+  displayName: ${{ format('Build the Packer with Ansible Docker Image, and push it to Container Registry {0}', parameters.containerRegistry) }}
+  timeoutInMinutes: 360
+
+  pool:
+    vmImage: 'ubuntu-16.04'
+
+  steps:
+    - task: AzureCLI@1
+      displayName: Build and Push '${{parameters.containerRegistry}}.azurecr.io/${{parameters.repositoryName}}' Docker image
+      inputs:
+        azureSubscription: ${{parameters.azureSubscription}}
+        scriptLocation: inlineScript
+        inlineScript:  |
+          docker build -t ${{parameters.containerRegistry}}.azurecr.io/${{parameters.repositoryName}} $(Build.SourcesDirectory)/Infrastructure/PackerAnsible/.
+          az acr login --name ${{parameters.containerRegistry}}
+          docker push ${{parameters.containerRegistry}}.azurecr.io/${{parameters.repositoryName}}:latest
