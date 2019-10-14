@@ -1,4 +1,4 @@
-parameters:
+variables:
   containerRegistry: 'demovmcontainer'
   azureSubscription: 'PoC'
   repositoryName: 'build-packer-ansible'
@@ -13,11 +13,11 @@ jobs:
 
   steps:
     - task: AzureCLI@1
-      displayName: Build and Push '${{parameters.containerRegistry}}.azurecr.io/${{parameters.repositoryName}}' Docker image
+      displayName: Build and Push '${{variables.containerRegistry}}.azurecr.io/${{variables.repositoryName}}' Docker image
       inputs:
-        azureSubscription: ${{parameters.azureSubscription}}
+        azureSubscription: ${{variables.azureSubscription}}
         scriptLocation: inlineScript
         inlineScript:  |
-          docker build -t ${{parameters.containerRegistry}}.azurecr.io/${{parameters.repositoryName}} $(Build.SourcesDirectory)/Infrastructure/PackerAnsible/.
-          az acr login --name ${{parameters.containerRegistry}}
-          docker push ${{parameters.containerRegistry}}.azurecr.io/${{parameters.repositoryName}}:latest
+          docker build -t ${{variables.containerRegistry}}.azurecr.io/${{variables.repositoryName}} $(Build.SourcesDirectory)/Infrastructure/PackerAnsible/.
+          az acr login --name ${{variables.containerRegistry}}
+          docker push ${{variables.containerRegistry}}.azurecr.io/${{variables.repositoryName}}:latest
