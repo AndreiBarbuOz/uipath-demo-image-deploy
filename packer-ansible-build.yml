@@ -5,7 +5,7 @@ variables:
 
 jobs:
 - job:
-  displayName: ${{ format('Build the Packer with Ansible Docker Image, and push it to Container Registry {0}', parameters.containerRegistry) }}
+  displayName: ${{ format('Build the Packer with Ansible Docker Image, and push it to Container Registry {0}', variables.containerRegistry) }}
   timeoutInMinutes: 360
 
   pool:
