@@ -18,6 +18,6 @@ jobs:
         azureSubscription: ${{variables.azureSubscription}}
         scriptLocation: inlineScript
         inlineScript:  |
-          docker build -t ${{variables.containerRegistry}}.azurecr.io/${{variables.repositoryName}} $(Build.SourcesDirectory)/Infrastructure/PackerAnsible/.
+          docker build -t ${{variables.containerRegistry}}.azurecr.io/${{variables.repositoryName}} $(Build.SourcesDirectory)/.
           az acr login --name ${{variables.containerRegistry}}
           docker push ${{variables.containerRegistry}}.azurecr.io/${{variables.repositoryName}}:latest
