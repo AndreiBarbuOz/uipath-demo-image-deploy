@@ -1,6 +1,6 @@
 variables:
   containerRegistry: 'demovmcontainer'
-  azureSubscription: 'PoC'
+  azureSubscription: 'azure-poc-subscription'
   repositoryName: 'build-packer-ansible'
 
 jobs:
