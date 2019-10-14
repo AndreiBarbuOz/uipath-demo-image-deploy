@@ -25,5 +25,3 @@ RUN wget https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER
     mv packer /usr/local/bin
 
 RUN useradd -ms /bin/bash ansible
-RUN mkdir -p /ansible/scripts /ansible/playbooks
-WORKDIR /ansible
