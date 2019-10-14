@@ -1,6 +1,6 @@
 variables:
   containerRegistry: 'demovmcontainer'
-  azureSubscription: 'azure-poc-subscription'
+  azureSubscription: 'presales-cloud-poc-rg'
   repositoryName: 'build-packer-ansible'
 
 jobs:
