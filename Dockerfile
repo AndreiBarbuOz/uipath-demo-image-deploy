@@ -4,12 +4,6 @@ ARG PACKER_VERSION="1.4.1"
 ENV PACKER_VERSION="$PACKER_VERSION"
 ENV ANSIBLE_CALLBACK_WHITELIST="profile_tasks"
 
-# Default Packer config values
-ENV AZ_LOCATION="Southeast Asia"
-ENV AZ_VM_SIZE="Standard_D4s_v3"
-ENV AZ_IMAGE_RESOURCE_GROUP="presales-cloud-poc-rg"
-ENV AZ_STORAGE_ACCOUNT_NAME="presalesdemobuild"
-
 # Install Ansible
 WORKDIR /install
 RUN apt-get update && \
