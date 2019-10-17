@@ -1,23 +1,21 @@
 variables:
-  containerRegistry: 'demovmcontainer'
-  azureSubscription: 'presales-cloud-poc-rg'
-  repositoryName: 'build-packer-ansible'
+- group: demo-vm-deploy
 
 jobs:
 - job:
-  displayName: ${{ format('Build the Packer with Ansible Docker Image, and push it to Container Registry {0}', variables.containerRegistry) }}
+  displayName: Build the Packer with Ansible Docker Image, and push it to Container Registry
   timeoutInMinutes: 360
 
   pool:
     vmImage: 'ubuntu-16.04'
 
   steps:
-    - task: AzureCLI@1
-      displayName: Build and Push '${{variables.containerRegistry}}.azurecr.io/${{variables.repositoryName}}' Docker image
+    - task: AzureCLI@2
+      displayName: Build and Push the Docker image
       inputs:
-        azureSubscription: ${{variables.azureSubscription}}
+        azureSubscription: $(azureSubscription)
         scriptLocation: inlineScript
         inlineScript:  |
-          docker build -t ${{variables.containerRegistry}}.azurecr.io/${{variables.repositoryName}} $(Build.SourcesDirectory)/.
-          az acr login --name ${{variables.containerRegistry}}
-          docker push ${{variables.containerRegistry}}.azurecr.io/${{variables.repositoryName}}:latest
+          docker build -t $(containerRegistry).azurecr.io/$(repositoryName) $(Build.SourcesDirectory)/.
+          az acr login --name $(containerRegistry)
+          docker push $(containerRegistry).azurecr.io/$(repositoryName):latest
