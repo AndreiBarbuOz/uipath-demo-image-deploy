@@ -3,6 +3,7 @@
 ## Purpose
 The project deploys a pipeline which builds the Dockerfile, and pushes the image to an Azure Container Registry. The purpose of the Docker image is to be used in Azure pipelines for building Images using [Packer](https://www.packer.io/) and [Ansible](https://www.ansible.com)
 
+![Diagram](https://www.lucidchart.com/publicSegments/view/c810404e-7b5f-4b2e-b51b-23a832058d53/image.png)
 ## Development environment setup
 
 During development, a Linux VM can be provisioned and Docker installed, following the instructions here: https://docs.docker.com/install/linux/docker-ce/ubuntu/. The machine will be used for testing the Dockerfile. 
@@ -24,6 +25,8 @@ The list of items needed for development and deployment:
     resourceID=$(az acr show --resource-group <resource group name> --name <container name> --query id --output tsv)
     az role assignment create --assignee $spID --scope $resourceID --role owner
     ```
+    This will allow `az acr login --identity` using the aforementioned identity
+* An `Azure Pipeline` build triggered by the repository
 * The `Azure Pipeline` needs to have variable group called `demo-vm-deploy` containing these values:
     - containerRegistry
     - azureSubscription
