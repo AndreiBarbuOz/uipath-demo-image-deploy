@@ -7,7 +7,7 @@ ENV ANSIBLE_CALLBACK_WHITELIST="profile_tasks"
 # Install Ansible
 WORKDIR /install
 RUN apt-get update && \
-    apt-get install -y software-properties-common unzip python-pip wget sudo && \
+    apt-get install -y software-properties-common unzip python-pip wget sudo curl && \
     apt-add-repository -y ppa:ansible/ansible && \
     apt-get update && \
     apt-get install -y ansible && \
