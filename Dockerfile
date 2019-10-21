@@ -18,4 +18,7 @@ RUN wget https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER
     unzip packer_${PACKER_VERSION}_linux_amd64.zip && \
     mv packer /usr/local/bin
 
+# Install Azure CLI
+RUN curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
 RUN useradd -ms /bin/bash ansible
