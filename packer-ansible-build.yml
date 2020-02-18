@@ -13,10 +13,10 @@ jobs:
     - task: AzureCLI@2
       displayName: Build and Push the Docker image
       inputs:
-        azureSubscription: $(azureSubscription)
+        azureSubscription: $(prodAzureConnection)
         scriptType: bash
         scriptLocation: inlineScript
         inlineScript:  |
-          docker build -t $(containerRegistry).azurecr.io/$(repositoryName) $(Build.SourcesDirectory)/.
+          docker build -t $(containerRegistry).azurecr.io/$(dockerBuildRepositoryName) $(Build.SourcesDirectory)/.
           az acr login --name $(containerRegistry)
-          docker push $(containerRegistry).azurecr.io/$(repositoryName):latest
+          docker push $(containerRegistry).azurecr.io/$(dockerBuildRepositoryName):latest
