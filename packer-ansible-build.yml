@@ -7,16 +7,30 @@ jobs:
   timeoutInMinutes: 360
 
   pool:
-    vmImage: 'ubuntu-16.04'
+    vmImage: 'ubuntu-18.04'
 
   steps:
-    - task: AzureCLI@2
-      displayName: Build and Push the Docker image
+    - task: Docker@2
+      displayName: Login to Azure Container Registry
       inputs:
-        azureSubscription: $(prodAzureConnection)
-        scriptType: bash
-        scriptLocation: inlineScript
-        inlineScript:  |
-          docker build -t $(containerRegistry).azurecr.io/$(dockerBuildRepositoryName) $(Build.SourcesDirectory)/.
-          az acr login --name $(containerRegistry)
-          docker push $(containerRegistry).azurecr.io/$(dockerBuildRepositoryName):latest
+        command: login
+        containerRegistry: dsfAcrConnection
+    - task: Docker@2
+      displayName: Build web
+      inputs:
+        command: build
+        Dockerfile: $(Build.SourcesDirectory)/Dockerfile
+        buildContext: $(Build.SourcesDirectory)
+        repository: dsf/build
+        tags: |
+          latest
+          $(Build.BuildId)
+
+    - task: Docker@2
+      displayName: Push web
+      inputs:
+        command: push
+        repository: dsf/build
+        tags: |
+          latest
+          $(Build.BuildId)
